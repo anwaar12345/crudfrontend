@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Helpers\Helper;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,15 +13,24 @@ use App\Helpers\Helper;
 |
 */
 
-Route::get('/', function () {
+// Route::get('/', function () {
 
-$data= [
-'email' =>'shah@shah',
-'password' => 'shahji444'
+// $data= [
+// 'email' =>'shah@shah',
+// 'password' => 'shahji444'
 
-];
-//    $request = Helper::api_call('login','post',$data);
-$results = Helper::api_call('users','GET');
-return view('welcome',compact('results'));
+// ];
+// //    $request = Helper::api_call('login','post',$data);
+// $results = Helper::api_call('users','GET');
+// return view('welcome',compact('results'));
 
-});
+// });
+
+
+
+
+Route::get('/register', 'AuthCustomerController@index');
+
+Route::post('/post-register','AuthCustomerController@register');
+
+

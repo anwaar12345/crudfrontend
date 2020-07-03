@@ -9,7 +9,7 @@ use Auth;
 class Helper
 {
 
- public static function api_call($url, $method, $arrayData = null, $content_type = 'json', $authheader = null)
+ public static function api_call($url, $method, $arrayData = null, $authheader = null)
  {
   
 if($method=="GET")
@@ -24,15 +24,37 @@ if($method=="GET")
     return $result->data;
     
 }
+
 }
 
 if($method=="post"){
 
-$client = new \GuzzleHttp\Client();
+
+
+    $client = new \GuzzleHttp\Client();
+    $url = env('API_URL').$url;
+   
     $body = $arrayData;
-    $response = $client->request("POST", env('API_URL').$url, ['form_params'=>$body]);
-    $response = $client->send($response);
-    return $response;
+    $i = ['profile' => [
+        [
+            'profile'     => $body['profile'],
+            'contents' => fopen($body['profile'], 'r')
+        ]]];
+        // dd($i);
+    //  dd($body['profile']);
+    $request = $client->post($url,['form_params' => [
+        'name' => $body['name'],
+        'email' => $body['email'],
+        'password' => $body['password'],
+        'profile' => ['profile' => [
+            [
+                'profile'     => $body['profile'],
+                'contents' => fopen($body['profile'], 'r')
+            ]]]
+        ]]);
+    $response = $request->send();
+  
+    dd($response);
 
 }
 
