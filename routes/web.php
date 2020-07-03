@@ -21,8 +21,7 @@ $data= [
 
 ];
 //    $request = Helper::api_call('login','post',$data);
-$request = Helper::api_call('users','GET');
+$results = Helper::api_call('users','GET');
+return view('welcome',compact('results'));
 
-    
-    // return view('welcome');
 });

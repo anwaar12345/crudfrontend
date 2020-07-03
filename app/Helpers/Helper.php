@@ -18,7 +18,12 @@ if($method=="GET")
     $client = new \GuzzleHttp\Client();
     $api = ['api-token' => 'dxddsjjmkikj'];
     $response = $client->request($method, env('API_URL').$url,['headers' => $api]);
-    dd($response->getBody()->getContents());    
+    $result = json_decode($response->getBody()->getContents());
+    if($result->success == true){
+    
+    return $result->data;
+    
+}
 }
 
 if($method=="post"){
