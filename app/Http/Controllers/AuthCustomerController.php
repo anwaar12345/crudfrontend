@@ -38,14 +38,14 @@ public function register(Request $request)
         'name' => $request->name,
         'email' => $request->email,
         'password' => $request->password,
-        'profile' => $request->profile    
+        'profile' => $request->profile     
         ];
 
-        // dd($data);
         
         $request = Helper::api_call('signup','post',$data);
-        dd($request);
-        return view('welcome',compact('results'));
+       
+        return back()
+        ->with('message', 'Registered Successfully');
         
 
 

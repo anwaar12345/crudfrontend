@@ -2,6 +2,7 @@
 
 namespace App\Helpers;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\File;
 use GuzzleHttp\Client;
 use Session;
 use Auth;
@@ -35,30 +36,40 @@ if($method=="post"){
     $url = env('API_URL').$url;
    
     $body = $arrayData;
-    $i = ['profile' => [
-        [
-            'profile'     => $body['profile'],
-            'contents' => fopen($body['profile'], 'r')
-        ]]];
-        // dd($i);
-    //  dd($body['profile']);
-    $request = $client->post($url,['form_params' => [
-        'name' => $body['name'],
-        'email' => $body['email'],
-        'password' => $body['password'],
-        'profile' => ['profile' => [
+   
+
+
+$request = $client->post($url,[
+        
+        'multipart' => [
+          
             [
-                'profile'     => $body['profile'],
-                'contents' => fopen($body['profile'], 'r')
-            ]]]
-        ]]);
-    $response = $request->send();
-  
-    dd($response);
+                'name' => 'name',
+                 'contents' => $body['name']
+            ],
+            [
+               'name' => 'email',
+                'contents' => $body['email']
+            ],
+            [
+                'name' => 'password',
+                 'contents' => $body['password']
+            ],
+            [
+                'name' => 'profile',
+                'contents' => file_get_contents($body['profile']->getRealPath()),
+                'filename' => $body['profile']->getClientOriginalName()
+            ]
+        ]
+         
+        ]
+        );
+    
+   
 
 }
 
-
+return $request;
 
 
 
