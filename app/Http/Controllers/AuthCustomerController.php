@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Helpers\Helper;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 
 class AuthCustomerController extends Controller
 {
@@ -85,14 +86,23 @@ public function postlogin(Request $request)
        ];
         
         $request = Helper::api_call('login','post',$data);
-   
-        if($request){
+  
+         
+            $data = json_decode($request->getbody()->getContents());
+    //    dd($data);
+        if($data->message == "loggedin Successfully"){
+           
+              Session::put('api_token', $data->data->api_token);
+          
+           return redirect('/home');
+       }else if($data->message == "User not found"){
         return back()
-        ->with('message', 'logged in Successfully');
-        
+        ->withErrors('User Not Found');           
        }else{
-           dd('failed');
-       }    
+        return back()
+        ->withErrors('logged in Failed | Invaled Username or Password |');
+       }
+            
 
 
 

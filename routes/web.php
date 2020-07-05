@@ -36,3 +36,15 @@ Route::post('/post-register','AuthCustomerController@register');
 Route::get('/login','AuthCustomerController@login');
 
 Route::post('/post-login','AuthCustomerController@postlogin');
+
+Route::get('/home',function(){
+
+
+    if(Session::has('api_token')){
+                   echo (Session::get('api_token'));
+            Session::forget('api_token');
+               }else{
+                   return redirect('/login');
+               }
+
+});
