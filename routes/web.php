@@ -41,8 +41,9 @@ Route::get('/home',function(){
 
 
     if(Session::has('api_token')){
-                   echo (Session::get('api_token'));
-            Session::forget('api_token');
+return view('welcome');
+            //        echo (Session::get('api_token'));
+            // Session::forget('api_token');
                }else{
                    return redirect('/login');
                }

@@ -85,9 +85,8 @@
                 </div>
 
                 <div class="links">
-                @foreach($results as $user)
-                    <a href="https://laravel.com/docs">{{$user->name}}</a>
-                @endforeach    
+
+{{Session::get('api_token')}}
                 </div>
             </div>
         </div>
