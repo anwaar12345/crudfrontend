@@ -43,10 +43,64 @@ public function register(Request $request)
 
         
         $request = Helper::api_call('signup','post',$data);
-       
+// dd($request);
+        if($request){
         return back()
         ->with('message', 'Registered Successfully');
         
+       }else{
+           dd('failed');
+       }       
+
+
+
+}
+
+
+public function login()
+{
+
+
+    return view('login');
+}
+
+
+
+public function postlogin(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'email' => 'required',
+        'password' => 'required'
+    ]);
+    if ($validator->fails()) {
+        return redirect('/login')
+                    ->withErrors($validator)
+                    ->withInput();
+    }
+
+
+    $data = [
+        'email' => $request->email,
+        'password' => $request->password 
+       ];
+        
+        $request = Helper::api_call('login','post',$data);
+   
+        if($request){
+        return back()
+        ->with('message', 'logged in Successfully');
+        
+       }else{
+           dd('failed');
+       }    
+
+
+
+}
+
+   
+
+
 
 
 
@@ -54,5 +108,3 @@ public function register(Request $request)
 
 
 
-
-}

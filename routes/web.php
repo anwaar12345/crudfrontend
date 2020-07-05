@@ -33,4 +33,6 @@ Route::get('/register', 'AuthCustomerController@index');
 
 Route::post('/post-register','AuthCustomerController@register');
 
+Route::get('/login','AuthCustomerController@login');
 
+Route::post('/post-login','AuthCustomerController@postlogin');

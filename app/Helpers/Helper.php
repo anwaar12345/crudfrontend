@@ -28,7 +28,7 @@ if($method=="GET")
 
 }
 
-if($method=="post"){
+if($method=="post" && $url=="signup"){
 
 
 
@@ -65,11 +65,39 @@ $request = $client->post($url,[
         ]
         );
     
+        return true;
    
 
+}else if($method=="post" && $url=="login"){
+
+    $client = new \GuzzleHttp\Client();
+    $url = env('API_URL').$url;
+   
+    $body = $arrayData;
+   
+$request = $client->post($url,[
+        
+        'multipart' => [
+            [
+               'name' => 'email',
+                'contents' => $body['email']
+            ],
+            [
+                'name' => 'password',
+                 'contents' => $body['password']
+            ]
+        ]
+         
+        ]
+        );
+    
+        return true;
+   
+
+}else{
+    return false;
 }
 
-return $request;
 
 
 

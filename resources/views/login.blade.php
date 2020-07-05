@@ -13,7 +13,7 @@
 
 
 
-<form class="bg-dark text-white mt-4 p-4" action="{{url('/post-register')}}" method="post" enctype="multipart/form-data">
+<form class="bg-dark text-white mt-4 p-4" action="{{url('/post-login')}}" method="post" enctype="multipart/form-data">
 
 @if ($errors->any())
     <div class="alert alert-danger">
@@ -24,20 +24,12 @@
         </ul>
     </div>
 @endif
-@if(session()->has('message'))
-    <div class="alert alert-success">
-        {{ session()->get('message') }}
-    </div>
-@endif
+
 <div class="card mb-4">
   <div class="card-body">
-<h3 class="text-center text-dark">Please Register Here</h3><hr><h4 class="text-dark text-center">Already Have an Account ?? <b><a href="{{url('/login')}}">Login</a></b></h4>
+<h3 class="text-center text-dark">Please Login Here</h3><hr><h4 class="text-dark text-center">Need an Account ?? <b><a href="{{url('/register')}}">Register</a></b></h4>
   </div>
 </div>
-  <div class="form-group">
-    <label for="name">Name</label>
-    <input type="text" class="form-control" id="name" name="name" placeholder="Enter Name">
-  </div>
    @csrf
   <div class="form-group">
     <label for="email">Email</label>
@@ -47,11 +39,6 @@
   <div class="form-group">
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" name="password" placeholder="Enter Password">
-  </div>
-
-  <div class="form-group">
-    <label for="profile">Profile</label><br>
-    <input type="file" id="profile" name="profile">
   </div>
 
 
