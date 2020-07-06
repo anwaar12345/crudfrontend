@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Helpers\Helper;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -15,19 +15,23 @@ use Illuminate\Support\Facades\Route;
 
 // Route::get('/', function () {
 
-// $data= [
-// 'email' =>'shah@shah',
-// 'password' => 'shahji444'
+// // $data= [
+// // 'email' =>'shah@shah',
+// // 'password' => 'shahji444'
 
-// ];
+// // ];
 // //    $request = Helper::api_call('login','post',$data);
 // $results = Helper::api_call('users','GET');
+// dd($results);
 // return view('welcome',compact('results'));
 
 // });
 
 
-
+Route::post('/',function(){
+    Session::forget('api_token');
+    return redirect('/login');
+})->name('/');
 
 Route::get('/register', 'AuthCustomerController@index');
 
@@ -37,15 +41,4 @@ Route::get('/login','AuthCustomerController@login');
 
 Route::post('/post-login','AuthCustomerController@postlogin');
 
-Route::get('/home',function(){
-
-
-    if(Session::has('api_token')){
-return view('welcome');
-            //        echo (Session::get('api_token'));
-            // Session::forget('api_token');
-               }else{
-                   return redirect('/login');
-               }
-
-});
+Route::resource('users','UserAjaxController')->middleware('CheckUser');

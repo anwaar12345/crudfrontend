@@ -94,7 +94,7 @@ public function postlogin(Request $request)
            
               Session::put('api_token', $data->data->api_token);
           
-           return redirect('/home');
+           return redirect('users');
        }else if($data->message == "User not found"){
         return back()
         ->withErrors('User Not Found');           
