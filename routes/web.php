@@ -28,10 +28,10 @@ use App\Helpers\Helper;
 // });
 
 
-Route::post('/',function(){
-    Session::forget('api_token');
-    return redirect('/login');
-})->name('/');
+// Route::post('/',function(){
+//     Session::forget('api_token');
+//     return redirect('/login');
+// })->name('/');
 
 Route::get('/register', 'AuthCustomerController@index');
 
@@ -40,5 +40,5 @@ Route::post('/post-register','AuthCustomerController@register');
 Route::get('/login','AuthCustomerController@login');
 
 Route::post('/post-login','AuthCustomerController@postlogin');
-
+Route::post('/logout','AuthCustomerController@logout')->name('/logout');
 Route::resource('users','UserAjaxController')->middleware('CheckUser');

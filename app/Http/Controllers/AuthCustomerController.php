@@ -50,7 +50,7 @@ public function register(Request $request)
         ->with('message', 'Registered Successfully');
         
        }else{
-           dd('failed');
+           dd('failed Registration');
        }       
 
 
@@ -109,10 +109,28 @@ public function postlogin(Request $request)
 }
 
    
+public function logout()
+{
+
+
+    $request = Helper::api_call('logout','post');
+
+         
+    $data = json_decode($request->getbody()->getContents());
+// dd($data->message);
+if($data->message){
+   
+      Session::forget('api_token');
+  
+   return redirect('/login');
+}
+    
 
 
 
 
+
+}
 
 }
 

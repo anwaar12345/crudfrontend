@@ -95,78 +95,18 @@ $request = $client->post($url,[
         return $request;
    
 
-}else if($method="POST" && $url="create-user"){
-
+}else if($method=="post" && $url == "logout"){
     $client = new \GuzzleHttp\Client();
-    $url = env('API_URL').$url;
-   
-    $body = $arrayData;
-    $api = ['api-token' => Session::has('api_token')];
-
-$request = $client->post($url,['headers' => $api],[
-        
-        'multipart' => [
-            [
-               'name' => 'name',
-                'contents' => $body['name']
-            ],
-            [
-                'name' => 'email',
-                 'contents' => $body['email']
-             ],
-            [
-                'name' => 'password',
-                 'contents' => $body['password']
-            ]
-        ]
-         
-            ],
-         
-        );
+    $api = ['api-token' => Session::get('api_token')];
     
-        return $request;
+    $response = $client->request($method, env('API_URL').$url,['headers' => $api]);
 
-
-
-
-}else if($method="put" && $url = "edit"){
-    $client = new \GuzzleHttp\Client();
-    $url = env('API_URL').$url;
-   
-    $body = $arrayData;
-    $api = Session::has('api_token');
-
-$request = $client->put($url,['headers' =>
-[
-    'api_token' => $api
-]
-],[
-        
-        'multipart' => [
-            [
-               'name' => 'name',
-                'contents' => $body['name']
-            ],
-            [
-                'name' => 'email',
-                 'contents' => $body['email']
-             ]
-        ]
-         
-            ],
-        );
     
-        return $request;
-
-
-
+        return $response;
 
 }else{
     return $request;
 }
-
-
-
 
  }
 
