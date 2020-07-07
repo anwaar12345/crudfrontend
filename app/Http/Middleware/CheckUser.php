@@ -17,9 +17,10 @@ class CheckUser
     {
         if(Session::has('api_token')){
             return $next($request);
-        } else{
-            redirect('/login');
-        }
+        } 
+           
+            return redirect()->to('login');
+        
 
         
     }
