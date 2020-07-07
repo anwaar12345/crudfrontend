@@ -179,6 +179,31 @@
           $('#name').val(data.data.name);
           $('#email').val(data.data.email);
 
+          $('#saveBtn').click(function (e) {
+        e.preventDefault();
+        $(this).html('Saving in process');
+    if(User_id){
+        $.ajax({
+          data: $('#UserForm').serialize(),
+          url: "http://soacrud-api-local/api/update/" + User_id,
+          type: "PUT",
+          dataType: 'json',
+          success: function (data) {
+     
+              $('#UserForm').trigger("reset");
+              $('#ajaxModel').modal('hide');
+              $('.passwords').show();
+              table.draw();
+         
+          },
+          error: function (data) {
+              console.log('Error:', data);
+              $('#saveBtn').html('Save Changes');
+          }
+      });
+    }
+       
+    });
       })
       
    });
