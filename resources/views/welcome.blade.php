@@ -3,6 +3,7 @@
 <head>
     <title>User Management System</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <meta meta name="api-token" content="{{Session::get('api_token')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css" />
     <link href="https://cdn.datatables.net/1.10.17/css/jquery.dataTables.min.css" rel="stylesheet">
     <link href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css" rel="stylesheet">
@@ -135,8 +136,10 @@
      
     $.ajaxSetup({
           headers: {
-              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content'),
+              'api-token': $('meta[name="api-token"]').attr('content'),
           }
+       
     });
     
     var table = $('.data-table').DataTable({
@@ -168,15 +171,16 @@
     $('body').on('click', '.editUser', function () {
         
       var User_id = $(this).data('id');
-      $.get("{{ route('users.index') }}" +'/' + User_id +'/edit', function (data) {
+      $.get("http://soacrud-api-local/api" +'/edit/' + User_id, function (data) {
           $('#modelHeading').html("Edit User");
           $('#saveBtn').val("edit-user");
           $('#ajaxModel').modal('show');
           $('.passwords').hide();
-          $('#name').val(data.name);
-          $('#email').val(data.email);
+          $('#name').val(data.data.name);
+          $('#email').val(data.data.email);
 
       })
+      
    });
     
     $('#saveBtn').click(function (e) {
@@ -185,7 +189,7 @@
     
         $.ajax({
           data: $('#UserForm').serialize(),
-          url: "{{ route('users.store') }}",
+          url: "http://soacrud-api-local/api/create-user",
           type: "POST",
           dataType: 'json',
           success: function (data) {
@@ -209,7 +213,7 @@
       {
         $.ajax({
             type: "DELETE",
-            url: "{{ route('users.store') }}"+'/'+User_id,
+            url: "http://soacrud-api-local/api/delete/"+ User_id,
             success: function (data) {
                 table.draw();
             },
